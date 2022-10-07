@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -40,6 +40,7 @@ import com.ericbt.ebtcompass.R;
 import com.ericbt.ebtcompass.StringLiterals;
 import com.ericbt.ebtcompass.array_adapters.PointArrayAdapter;
 import com.ericbt.ebtcompass.utils.AngleUtils;
+import com.ericbt.ebtcompass.utils.GoogleMapsUtils;
 import com.ericbt.ebtcompass.utils.LocaleUtils;
 import com.ericbt.ebtcompass.utils.UnitUtils;
 
@@ -102,7 +103,10 @@ public class PointsActivity extends CustomActivity {
             final int listItemPosition = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
             final Point point = pointArrayAdapter.getItem(listItemPosition);
 
-            final String header = String.format(LocaleUtils.getDefaultLocale(), "Point \"%s\"", point.getName());
+            final String header = String.format(
+                    LocaleUtils.getLocale(),
+                    getString(R.string.point_context_menu_format_string),
+                    point.getName());
             menu.setHeaderTitle(header);
         }
     }
@@ -170,6 +174,17 @@ public class PointsActivity extends CustomActivity {
                 result = true;
             }
             break;
+
+            case R.id.share: {
+                final Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.points));
+                sharingIntent.putExtra(Intent.EXTRA_TEXT,
+                        GoogleMapsUtils.getMapUri(point.getLatitude(), point.getLongitude()));
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+            }
+            break;
         }
 
         return result;
@@ -179,12 +194,12 @@ public class PointsActivity extends CustomActivity {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(getText(R.string.delete_point));
 
-        final String message = String.format(LocaleUtils.getDefaultLocale(),
+        final String message = String.format(LocaleUtils.getLocale(),
                 getString(R.string.delete_point_question), point.getName());
 
         alertDialogBuilder.setMessage(message);
 
-        alertDialogBuilder.setPositiveButton(StringLiterals.OK, (arg0, arg1) -> {
+        alertDialogBuilder.setPositiveButton(getString(R.string.ok_button_text), (arg0, arg1) -> {
             Points.delete(this, point.getName());
             updateList();
         });
@@ -199,11 +214,11 @@ public class PointsActivity extends CustomActivity {
 
     private void deleteAll() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Delete All");
+        alertDialogBuilder.setTitle(R.string.delete_all_alert_dialog_header);
 
-        alertDialogBuilder.setMessage("Delete *all* points?");
+        alertDialogBuilder.setMessage(R.string.delete_all_points_alert_dialog_message);
 
-        alertDialogBuilder.setPositiveButton(StringLiterals.OK, (arg0, arg1) -> {
+        alertDialogBuilder.setPositiveButton(getString(R.string.ok_button_text), (arg0, arg1) -> {
             Points.deleteAll(this);
             updateList();
         });
@@ -263,22 +278,23 @@ public class PointsActivity extends CustomActivity {
         final boolean userPrefersMetric = UnitUtils.userPrefersMetric(this);
 
         final String headers = String.format(
-                "\"Point\",\"Line To\",\"Latitude\",\"Longitude\",\"Altitude (%s)\",\"Zone\",\"Easting\",\"Northing\",\"Color\",\"Units\"",
-                userPrefersMetric ? "m" : "ft"
+                getString(R.string.share_points_spreadsheet_headers),
+                        userPrefersMetric ? getString(R.string.meters_abbreviation) :
+                        getString(R.string.feet_abbreviation)
         );
 
         final StringBuilder allPointsText = new StringBuilder(headers + "\n");
 
         for (final Point point : Points.getAll(this)) {
-            final String[] utmValues = AngleUtils.getUTMValues(point.getLatitude(), point.getLongitude());
+            final String[] utmValues = AngleUtils.getUTMValues(point.getLatitude(), point.getLongitude(), this);
 
-            final double altitude = (UnitUtils.userPrefersMetric(this) ? point.getAltitude() : UnitUtils.toFeet(point.getAltitude()));
+            final double altitude = userPrefersMetric ? point.getAltitude() : UnitUtils.toFeet(point.getAltitude());
 
             final String lineToName = point.getLineToName() != null ?
                     point.getLineToName() : StringLiterals.EMPTY_STRING;
 
             final String line = String.format(
-                    LocaleUtils.getDefaultLocale(), "\"%s\",\"%s\",%.20f,%.20f,%.1f,\"%s\",%s,%s,%d,\"%s\"\n",
+                    LocaleUtils.getLocale(), "\"%s\",\"%s\",%.20f,%.20f,%.1f,\"%s\",%s,%s,%d,\"%s\"\n",
                     processName(point.getName()),
                     processName(lineToName),
                     point.getLatitude(),

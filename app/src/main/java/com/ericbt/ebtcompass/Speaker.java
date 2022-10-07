@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -30,7 +30,7 @@ public class Speaker {
     public static void speakForTurn(Turn.Direction direction, TextToSpeech textToSpeech, Context context) {
         Log.i(StringLiterals.LOG_TAG,
                 String.format(
-                        LocaleUtils.getDefaultLocale(),
+                        LocaleUtils.getLocale(),
                         "speakForTurn %s",
                         direction));
 

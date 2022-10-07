@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -43,22 +43,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.ericbt.ebtcompass.R;
 import com.ericbt.ebtcompass.StringLiterals;
 import com.ericbt.ebtcompass.services.CompassService;
 import com.ericbt.ebtcompass.services.GPSService;
 import com.ericbt.ebtcompass.ui.CompassRose;
+import com.ericbt.ebtcompass.utils.DataSmoother;
 import com.ericbt.ebtcompass.utils.GoogleMapsUtils;
 import com.ericbt.ebtcompass.utils.LocaleUtils;
 import com.ericbt.ebtcompass.utils.MathUtils;
 import com.ericbt.ebtcompass.utils.SensorUtils;
 
 public abstract class CompassActivity extends CustomActivity {
-    private final static int REQUEST_PERMISSIONS_CODE = 1000;
-
     protected Float bearingToDestination;
 
     protected CompassService compassService;
@@ -84,6 +82,25 @@ public abstract class CompassActivity extends CustomActivity {
 
     private String accelerometerAccuracyText, magnetometerAccuracyText;
 
+    private static int DATA_SMOOTHER_VALUES = 25;
+
+    private DataSmoother[] accelerometerReadingsDataSmoother = {
+            new DataSmoother(DATA_SMOOTHER_VALUES),
+            new DataSmoother(DATA_SMOOTHER_VALUES),
+            new DataSmoother(DATA_SMOOTHER_VALUES)
+    };
+
+    private DataSmoother[] magnetometerReadingsDataSmoother = {
+            new DataSmoother(DATA_SMOOTHER_VALUES),
+            new DataSmoother(DATA_SMOOTHER_VALUES),
+            new DataSmoother(DATA_SMOOTHER_VALUES)
+    };
+
+    final protected String[] permissions = new String[] {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+
     private void updateUI() {
         updateAccuracyLink();
 
@@ -100,9 +117,12 @@ public abstract class CompassActivity extends CustomActivity {
                         currentMagnetometerAccuracyText.equals(magnetometerAccuracyText)
                 )
            ) {
-            final String htmlString = String.format(LocaleUtils.getDefaultLocale(),
-                    "<a href='%s'>Accuracy: %s/%s</a>",
+            final String accuracyHeader = getString(R.string.accuracy_hyperlink_header);
+
+            final String htmlString = String.format(LocaleUtils.getLocale(),
+                    "<a href='%s'>%s%s/%s</a>",
                     getString(R.string.accuracy_url),
+                    accuracyHeader,
                     SensorUtils.getAccuracyText(accelerometerAccuracy),
                     SensorUtils.getAccuracyText(magnetometerAccuracy));
 
@@ -120,53 +140,6 @@ public abstract class CompassActivity extends CustomActivity {
 
     protected abstract void updateUI(double latitude, double longitude, double bearing,
                                      double speed, Float goToHeading);
-
-    protected boolean havePermissions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    protected void requestPermissions() {
-        Log.i(StringLiterals.LOG_TAG, "requestPermissions");
-
-        if (!havePermissions()) {
-            final String[] permissions = new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            };
-
-            ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_PERMISSIONS_CODE) {
-            // Checking whether user granted the permission or not.
-            if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                displayPermissionsDeniedMessage();
-            } else {
-                startUpdates();
-            }
-        }
-    }
-
-    private void displayPermissionsDeniedMessage() {
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(getString(R.string.permissions));
-        alertDialogBuilder.setMessage(getString(R.string.permissions_not_granted));
-
-        alertDialogBuilder.setPositiveButton(StringLiterals.OK, (dialog, which) -> {
-        });
-
-        final AlertDialog promptDialog = alertDialogBuilder.create();
-        promptDialog.setCancelable(false);
-        promptDialog.show();
-    }
 
     protected void startCompassService() {
         if (compassService == null) {
@@ -232,7 +205,7 @@ public abstract class CompassActivity extends CustomActivity {
     protected void startUpdates() {
         Log.i(StringLiterals.LOG_TAG, "startUpdates");
 
-        if (havePermissions()) {
+        if (haveAllPermissions()) {
             startCompassService();
             startGPSService();
         }
@@ -241,7 +214,7 @@ public abstract class CompassActivity extends CustomActivity {
     protected void stopUpdates() {
         Log.i(StringLiterals.LOG_TAG, "CompassActivity.stopUpdates");
 
-        if (havePermissions()) {
+        if (haveAllPermissions()) {
             stopCompassService();
             stopGPSService();
         }
@@ -355,7 +328,7 @@ public abstract class CompassActivity extends CustomActivity {
     protected void onSharedPreferenceChanged(String key) {
         Log.i(StringLiterals.LOG_TAG,
                 String.format(
-                        LocaleUtils.getDefaultLocale(),
+                        LocaleUtils.getLocale(),
                         "onSharedPreferenceChanged: key: %s",
                         key));
 
@@ -363,7 +336,7 @@ public abstract class CompassActivity extends CustomActivity {
             clearQuantities();
         }
 
-        if (havePermissions()) {
+        if (haveAllPermissions()) {
             switch (key) {
                 case CompassService.SENSOR_UPDATE_FREQUENCY: {
                     if (compassService != null) {
@@ -453,11 +426,19 @@ public abstract class CompassActivity extends CustomActivity {
         float correctedAzimuth = 0.0f;
 
         if (accelerometerReading != null) {
-            this.accelerometerReading = accelerometerReading;
+            this.accelerometerReading = new float[3];
+
+            for (int i = 0; i < this.accelerometerReading.length; i++) {
+                this.accelerometerReading[i] = accelerometerReadingsDataSmoother[i].add(accelerometerReading[i]);
+            }
         }
 
         if (magnetometerReading != null) {
-            this.magnetometerReading = magnetometerReading;
+            this.magnetometerReading = new float[3];
+
+            for (int i = 0; i < this.magnetometerReading.length; i++) {
+                this.magnetometerReading[i] = magnetometerReadingsDataSmoother[i].add(magnetometerReading[i]);
+            }
         }
 
         if (this.accelerometerReading != null && this.magnetometerReading != null) {
@@ -497,12 +478,37 @@ public abstract class CompassActivity extends CustomActivity {
                             orientationAngles[1],
                             orientationAngles[2],
                             correctedAzimuth,
-                            bearingToDestination);
+                            bearingToDestination,
+                            this);
 
             compassRoseCustom.setRotation(-correctedAzimuth);
             compassRoseCustom.setImageDrawable(compassRoseDrawable);
         }
 
         return correctedAzimuth;
+    }
+
+    protected boolean haveAllPermissions() {
+        for (final String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected boolean allPermissionsGranted(int[] grantResults) {
+        if (grantResults.length == 0) {
+            return false;
+        }
+
+        for (final int grantResult : grantResults) {
+            if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

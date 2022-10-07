@@ -1,4 +1,5 @@
 <resources>
+    <!-- DO NOT TRANSLATE -->
     <string name="app_name">EBT Compass</string>
 
     <string name="meters">meters</string>
@@ -20,7 +21,10 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_license_terms">License Terms</string>
+
+    <!-- DO NOT TRANSLATE -->
     <string name="web_url">https://www.ericbt.com/ebt_compass</string>
+
     <string name="web_url_text">Website</string>
 
     <string name="saved_points_will_appear">Saved points will appear here.</string>
@@ -39,19 +43,25 @@
     <string name="latitude_zone_heading">Latitude Zone:</string>
     <string name="longitude_zone_heading">Longitude Zone:</string>
 
+    <!-- DO NOT TRANSLATE -->
     <string name="accuracy_url">https://www.ericbt.com/ebt_compass#accuracy</string>
 
     <string name="line_activity_hint">Specify a heading and press \"GO\". Then start moving along that heading.\n\nWhen you drift off course, EBT Compass will help you get back on track, by speaking or vibrating:\n\none vibration: turn right\ntwo vibrations: turn left\n\nPress \"CLEAR\" to stop vibrations.</string>
 
+    <!-- DO NOT TRANSLATE -->
     <string name="help_url">https://www.ericbt.com/ebt_compass</string>
 
     <string name="ok">OK</string>
+
+    <string name="battery">Battery</string>
+    <string name="stop_compass_to_conserve_battery">Stop compass to conserve battery</string>
 
     <string name="speak_left">left</string>
     <string name="speak_right">right</string>
 
     <string name="permissions">Permissions</string>
-    <string name="permissions_not_granted">Permissions were not granted.</string>
+    <string name="permissions_not_granted">Some permissions were not granted.\n\nEBT Compass will not function correctly until all permissions are granted.\n\nPermissions are necessary to sample location data.\n\nClick \"Request Permissions\" to grant permissions.</string>
+    <string name="game_over">EBT Compass will not function correctly without all permissions.</string>
 
     <string name="sensors_header">Sensors</string>
     <string name="sensor_update_frequency_title">Magnetometer &amp; Gyro Updates</string>
@@ -105,7 +115,7 @@
     <string name="arrival_notification_header">Arrival Notifications</string>
 
     <string name="license_terms">EBT Compass
-(C) Copyright 2021
+(C) Copyright 2022
 Eric Bergman-Terrell
 \n\n
 This program and its source code are licensed under the GNU General Public
@@ -732,10 +742,10 @@ Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 \n\n
                      END OF TERMS AND CONDITIONS</string>
-    <string name="map">Map</string>
+    <string name="map_button_text">Map</string>
     <string name="icon_credits">Icons created by Bigmorr, the Consumer Financial Protection Bureau, Fibonacci, and Andrew Onorat</string>
     <string name="utm_code_credit"><![CDATA[Lat/Long <-> UTM conversion code written by Sami Salkosuo]]></string>
-    <string name="about_copyright">EBT Compass\n(C) Copyright 2021\nEric Bergman-Terrell</string>
+    <string name="about_copyright">EBT Compass\n(C) Copyright 2022\nEric Bergman-Terrell</string>
     <string name="about_feedback">Feedback: EBTCompass@EricBT.com</string>
     <string name="about_read_license_terms">Read License Terms</string>
     <string name="import_shared_points_title">Import Points</string>
@@ -745,5 +755,100 @@ copy of the Program in return for a fee.
     <string name="points_menu_delete">Delete</string>
     <string name="points_menu_delete_all">Delete All</string>
     <string name="press_off_conserve_battery">Press \"Off\" when not in use to conserve battery</string>
-
+    <string name="alvaro_credits">Catalan and Spanish translations, plus bug fixes by Álvaro Martínez Majado https://github.com/alvaromartinezmajado</string>
+    <string name="name_label">Name:</string>
+    <string name="name_of_point_required">Name of point - required</string>
+    <string name="existing_name_label">Existing Name:</string>
+    <string name="latitude_label">Latitude:</string>
+    <string name="degree_symbol">°</string>
+    <string name="longitude_label">Longitude:</string>
+    <string name="minutes_symbol">\'</string>
+    <string name="seconds_symbol">\"</string>
+    <string name="easting_label">Easting:</string>
+    <string name="northing_label">Northing:</string>
+    <string name="altitude_label">Altitude:</string>
+    <string name="color_label">Color:</string>
+    <string name="draw_line_to_label">Draw Line to:</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="save_button_text">Save</string>
+    <string name="current_location_label">Current Location:</string>
+    <string name="destination_label">Destination:</string>
+    <string name="route_label">Route:</string>
+    <string name="towards_delimiter_begin">&#160;(towards&#160;</string>
+    <string name="towards_delimiter_end">)</string>
+    <string name="towards_symbol">&#9679;</string>
+    <string name="compass_label">Compass:</string>
+    <string name="compass_content_description">Compass</string>
+    <string name="heading_label">Heading:</string>
+    <string name="go_button_text">Go</string>
+    <string name="clear_button_text">Clear</string>
+    <string name="importing_points">Importing points...</string>
+    <string name="license_terms_label">License Terms:</string>
+    <string name="your_decision_label">Your Decision:</string>
+    <string name="i_reject_these_terms">I reject these terms</string>
+    <string name="i_accept_these_terms">I accept these terms</string>
+    <string name="ok_button_text">OK</string>
+    <string name="line_direction_begin">&#160;(</string>
+    <string name="line_direction_end">)</string>
+    <string name="on_button_text">On</string>
+    <string name="off_button_text">Off</string>
+    <string name="to_point_button_text">To Point</string>
+    <string name="line_button_text">Line</string>
+    <string name="save_point_button_text">Save Point</string>
+    <string name="points_button_text">Points</string>
+    <string name="share_menu_text">Share</string>
+    <string name="help_menu_text">Help</string>
+    <string name="settings_menu_text">Settings</string>
+    <string name="about_menu_text">About</string>
+    <string name="utm_format_string">UTM: %s %sE %sN</string>
+    <string name="to_DMS_format_string">%s%d%s%02d%s%02d%s%03d%s</string>
+    <string name="positive_number_sign"></string>
+    <string name="negative_number_sign">-</string>
+    <string name="north_abbreviation">N</string>
+    <string name="south_abbreviation">S</string>
+    <string name="east_abbreviation">E</string>
+    <string name="west_abbreviation">W</string>
+    <string name="altitude_format_string_meters">%,d m</string>
+    <string name="altitude_format_string_feet">%,d ft</string>
+    <string name="speed_format_kilometers_per_hour">%,.1f km/h</string>
+    <string name="speed_format_miles_per_hour">%,.1f mi/h</string>
+    <string name="latitude_dms_direction_format_string">%s %s</string>
+    <string name="longitude_dms_direction_format_string">%s %s</string>
+    <string name="compass_degrees_and_heading_abbreviation">Compass: %d%s %s</string>
+    <string name="magnetic_declination_format_string">Mag Decl: %.1f%s %s</string>
+    <string name="gps_heading_format_string">GPS: %d%s (%s)</string>
+    <string name="line_heading_format_string">Line: %.1f%s (%s)</string>
+    <string name="utm_zone_format_string">%s%s</string>
+    <string name="share_points_spreadsheet_headers">\"Point\",\"Line To\",\"Latitude\",\"Longitude\",\"Altitude (%s)\",\"Zone\",\"Easting\",\"Northing\",\"Color\",\"Units\"</string>
+    <string name="meters_abbreviation">m</string>
+    <string name="feet_abbreviation">ft</string>
+    <string name="point_context_menu_format_string">Point \"%s\"</string>
+    <string name="delete_all_alert_dialog_header">Delete All</string>
+    <string name="delete_all_points_alert_dialog_message">Delete *all* points?</string>
+    <string name="about_activity_copyright_notice">%s v. %s\n(C) Copyright 2022\nEric Bergman-Terrell</string>
+    <string name="accuracy_hyperlink_header">Accuracy:&#160;</string>
+    <string name="update_orientation_angles_format_string">Compass: %d%s %s</string>
+    <string name="find_point_activity_go_instructions_format_string">Go %s, %d%s %s</string>
+    <string name="find_point_activity_current_location_format_string">%s %s %s %s</string>
+    <string name="find_point_activity_destination_text_format_string">%s %s %s %s</string>
+    <string name="you_are_within_x_of_your_destination_format_string">You are within %s of your destination.</string>
+    <string name="find_point_activity_distance_meters_format_string">%,d m</string>
+    <string name="find_point_activity_distance_kilometers_format_string">%,.1f km</string>
+    <string name="find_point_activity_distance_feet_format_string">%,d ft</string>
+    <string name="find_point_activity_distance_miles_format_string">%,.1f mi</string>
+    <string name="go_line_activity_direction_text_format_string">(%s)</string>
+    <string name="import_failed_format_string">Import failed: %s</string>
+    <string name="import_successful_format_string">Imported %d points in %.2f s</string>
+    <string name="rejected_license_terms_format_string">Rejected %s License Terms</string>
+    <string name="rejected_license_terms_format_string_2">You rejected the %s license terms. Please uninstall %s immediately.</string>
+    <string name="color_red">Red</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_green">Green</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_azure">Azure</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_violet">Violet</string>
+    <string name="color_magenta">Magenta</string>
+    <string name="color_rose">Rose</string>
 </resources>

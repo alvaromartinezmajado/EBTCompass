@@ -79,6 +79,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:autoLink="web"
+                android:text="@string/alvaro_credits"
+                android:textColor="?android:attr/textColorPrimary" >
+            </TextView>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/icon_credits"
                 android:textColor="?android:attr/textColorPrimary"
                 >

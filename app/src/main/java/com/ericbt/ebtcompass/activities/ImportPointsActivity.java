@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -87,16 +87,16 @@ public class ImportPointsActivity extends CustomActivity {
                 if (importPointsResult.getException() != null) {
                     messageTV.setText(
                             String.format(
-                                    LocaleUtils.getDefaultLocale(),
-                                    "Import failed: %s",
+                                    LocaleUtils.getLocale(),
+                                    getString(R.string.import_failed_format_string),
                                     importPointsResult.getException().getMessage())
                     );
                 } else {
                     final float seconds = importPointsResult.getDuration() / 1000.0f;
 
                     messageTV.setText(
-                            String.format(LocaleUtils.getDefaultLocale(),
-                                    "Imported %d points in %.2f s",
+                            String.format(LocaleUtils.getLocale(),
+                                    getString(R.string.import_successful_format_string),
                                     importPointsResult.getImportedPoints().length,
                                     seconds));
 

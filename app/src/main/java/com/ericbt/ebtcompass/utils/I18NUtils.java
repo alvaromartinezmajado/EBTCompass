@@ -18,28 +18,14 @@
     along with EBT Compass.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.ericbt.ebtcompass;
+package com.ericbt.ebtcompass.utils;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import com.ericbt.ebtcompass.StringLiterals;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import java.text.DecimalFormatSymbols;
 
-import static org.junit.Assert.*;
-
-import com.ericbt.ebtcompass.utils.AngleUtils;
-
-@RunWith(AndroidJUnit4.class)
-public class AngleTests {
-/*
-    @Test
-    public void toDMS() {
-        // 37°22'42.540
-        final double angle = 37.0d + 22.0d / Constants.MINUTES_PER_DEGREE + 42.540d / Constants.SECONDS_PER_DEGREE;
-
-        final String result = AngleUtils.toDMS(angle);
-
-        assertEquals("37°22'42.540\"", result);
+public class I18NUtils {
+    public static String getDecimalPoint() {
+        return StringLiterals.EMPTY_STRING + DecimalFormatSymbols.getInstance().getDecimalSeparator();
     }
-*/
 }

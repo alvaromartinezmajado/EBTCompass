@@ -4,6 +4,7 @@
         <item>English</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="distance_units_values">
         <item>METRIC</item>
         <item>ENGLISH</item>
@@ -14,11 +15,13 @@
         <item>UTM (WGS84 / NAD83)</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="angle_units_values">
         <item>LATLONG</item>
         <item>UTM</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="longitude_zone_values">
         <item>1</item>
         <item>2</item>
@@ -87,6 +90,7 @@
         <item>60</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="latitude_zone_values">
         <item>A</item>
         <item>B</item>
@@ -123,6 +127,7 @@
         <item>Most Frequent</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="sensor_update_frequency_values">
         <item>0</item>
         <item>1</item>
@@ -137,6 +142,7 @@
         <item>8x/second</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="gps_update_frequency_values">
         <item>1</item>
         <item>2</item>
@@ -152,6 +158,7 @@
         <item>Every minute</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="notification_frequency_values">
         <item>12</item>
         <item>6</item>
@@ -165,8 +172,40 @@
         <item>Vibration</item>
     </string-array>
 
+    <!-- DO NOT TRANSLATE -->
     <string-array name="notification_values">
         <item>SPEECH</item>
         <item>VIBRATION</item>
+    </string-array>
+
+    <string-array name="bearing_directions">
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>WSW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+        <item>N</item>
+    </string-array>
+
+    <string-array name="compass_rose_directions">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
     </string-array>
 </resources>

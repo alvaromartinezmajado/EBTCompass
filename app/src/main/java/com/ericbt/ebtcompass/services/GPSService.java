@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -43,6 +43,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -166,7 +167,7 @@ public class GPSService extends BaseService {
 
         Log.i(StringLiterals.LOG_TAG,
                 String.format(
-                        LocaleUtils.getDefaultLocale(),
+                        LocaleUtils.getLocale(),
                         "Notification Mechanism: %s",
                         notificationMechanism));
 
@@ -215,7 +216,7 @@ public class GPSService extends BaseService {
         textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
             Log.i(StringLiterals.LOG_TAG,
                     String.format(
-                            LocaleUtils.getDefaultLocale(),
+                            LocaleUtils.getLocale(),
                             "tts onInit status: %d",
                             status));
 
@@ -248,7 +249,7 @@ public class GPSService extends BaseService {
 
         locationRequest.setInterval(updateInterval);
         locationRequest.setFastestInterval(updateInterval / 2);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
 
         return locationRequest;
     }
@@ -263,7 +264,7 @@ public class GPSService extends BaseService {
         final String signalInterval = preferences.getString(NOTIFICATION_FREQUENCY, "12");
 
         final int result = (60 / Integer.parseInt(signalInterval)) * 1000;
-        Log.i(StringLiterals.LOG_TAG, String.format(LocaleUtils.getDefaultLocale(), "getSignalInterval interval: %d", result));
+        Log.i(StringLiterals.LOG_TAG, String.format(LocaleUtils.getLocale(), "getSignalInterval interval: %d", result));
 
         return result;
     }

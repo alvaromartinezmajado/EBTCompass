@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -40,7 +40,7 @@ public class Vibrator {
 
     public static void vibrateForTurn(Turn.Direction direction, Context context) {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(),
+                String.format(LocaleUtils.getLocale(),
                         "vibrateForTurn %s",
                         direction));
 

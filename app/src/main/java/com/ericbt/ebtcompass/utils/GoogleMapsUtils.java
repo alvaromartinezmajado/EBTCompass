@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -25,7 +25,7 @@ public class GoogleMapsUtils {
         final int zoom = 13;
 
         return String.format(
-                LocaleUtils.getDefaultLocale(),
+                LocaleUtils.getLocale(),
                 "http://www.google.com/maps/place/%f,%f/@%f,%f,%dz",
                 latitude,
                 longitude,
