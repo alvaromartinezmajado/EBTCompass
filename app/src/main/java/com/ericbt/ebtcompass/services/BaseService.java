@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -68,7 +68,7 @@ public abstract class BaseService extends Service {
     @Override
     public void onCreate() {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(),
+                String.format(LocaleUtils.getLocale(),
                         "%s.onCreate begin",
                         className));
 
@@ -78,7 +78,7 @@ public abstract class BaseService extends Service {
     @Override
     public void onDestroy() {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(),
+                String.format(LocaleUtils.getLocale(),
                         "%s.onDestroy begin",
                         className));
 
@@ -97,7 +97,7 @@ public abstract class BaseService extends Service {
 
         Log.i(StringLiterals.LOG_TAG,
                 String.format(
-                        LocaleUtils.getDefaultLocale(),
+                        LocaleUtils.getLocale(),
                         "%s.onDestroy end",
                         className));
     }
@@ -105,7 +105,7 @@ public abstract class BaseService extends Service {
     @Override
     public void onLowMemory() {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(), "%s.onLowMemory", className));
+                String.format(LocaleUtils.getLocale(), "%s.onLowMemory", className));
 
         super.onLowMemory();
     }
@@ -113,7 +113,7 @@ public abstract class BaseService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(), "%s.onBind", className));
+                String.format(LocaleUtils.getLocale(), "%s.onBind", className));
 
         return binder;
     }
@@ -121,7 +121,7 @@ public abstract class BaseService extends Service {
     @Override
     public boolean onUnbind(Intent intent) {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(), "%s.onUnbind", className));
+                String.format(LocaleUtils.getLocale(), "%s.onUnbind", className));
 
         return true;
     }
@@ -129,7 +129,7 @@ public abstract class BaseService extends Service {
     @Override
     public void onRebind(Intent intent) {
         Log.i(StringLiterals.LOG_TAG,
-                String.format(LocaleUtils.getDefaultLocale(), "%s.onRebind", className));
+                String.format(LocaleUtils.getLocale(), "%s.onRebind", className));
     }
 
     // Cache the notification so that it can be shared by multiple services (otherwise it will
@@ -157,7 +157,8 @@ public abstract class BaseService extends Service {
 
             final Intent notificationIntent = new Intent(this, activityClass);
 
-            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 1,
+                    notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
             notification = new NotificationCompat
                     .Builder(this, NOTIFICATION_CHANNEL_ID)
@@ -165,7 +166,7 @@ public abstract class BaseService extends Service {
                     .setPriority(PRIORITY_LOW)
                     .setSmallIcon(R.mipmap.ic_launcher_notification)
                     .setContentText(getString(R.string.press_off_conserve_battery))
-                    .setContentTitle(StringLiterals.APP_NAME)
+                    .setContentTitle(getString(R.string.app_name))
                     .setContentIntent(pendingIntent)
                     .build();
 

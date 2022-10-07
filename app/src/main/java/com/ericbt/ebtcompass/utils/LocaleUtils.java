@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -20,10 +20,12 @@
 
 package com.ericbt.ebtcompass.utils;
 
+import androidx.core.os.LocaleListCompat;
+
 import java.util.Locale;
 
 public class LocaleUtils {
-    public static Locale getDefaultLocale() {
-        return Locale.US;
+    public static Locale getLocale() {
+        return LocaleListCompat.getDefault().get(0);
     }
 }

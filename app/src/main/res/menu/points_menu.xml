@@ -35,4 +35,11 @@
 
     </group>
 
+    <group>
+        <item
+            android:id="@+id/share"
+            android:title="@string/share_menu_text"
+            />
+    </group>
+
 </menu>

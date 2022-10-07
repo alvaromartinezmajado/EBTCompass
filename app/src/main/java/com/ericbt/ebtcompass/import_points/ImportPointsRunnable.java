@@ -1,6 +1,6 @@
 /*
   EBT Compass
-  (C) Copyright 2021, Eric Bergman-Terrell
+  (C) Copyright 2022, Eric Bergman-Terrell
 
   This file is part of EBT Compass.
 
@@ -81,7 +81,7 @@ public class ImportPointsRunnable implements Runnable {
         if (text != null) {
             Log.i(StringLiterals.LOG_TAG,
                     String.format(
-                            LocaleUtils.getDefaultLocale(),
+                            LocaleUtils.getLocale(),
                             "Shared Text: %s", text));
 
             final String[] lines = text.split("\n");
@@ -160,7 +160,7 @@ public class ImportPointsRunnable implements Runnable {
                 } else if (!units.trim().equalsIgnoreCase(StringLiterals.METRIC)) {
                     throw new Exception(
                             String.format(
-                                    LocaleUtils.getDefaultLocale(),
+                                    LocaleUtils.getLocale(),
                                     "Units must be \"%s\" or \"%s\"",
                                     StringLiterals.ENGLISH,
                                     StringLiterals.METRIC));
